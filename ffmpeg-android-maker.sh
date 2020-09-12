@@ -29,12 +29,15 @@ export BUILD_DIR_FFMPEG=$BUILD_DIR/ffmpeg
 # to make easier referencing them when FFmpeg is being built.
 export BUILD_DIR_EXTERNAL=$BUILD_DIR/external
 
+export FFMPEG_BUILD_CONFIGURATION_FLAGS=
+
 # Function that copies *.so files and headers of the current ANDROID_ABI
 # to the proper place inside OUTPUT_DIR
 function prepareOutput() {
   OUTPUT_LIB=${OUTPUT_DIR}/lib/${ANDROID_ABI}
   mkdir -p ${OUTPUT_LIB}
-  cp ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB}
+  cp ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB} 2>/dev/null
+  cp ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.a ${OUTPUT_LIB} 2>/dev/null
 
   OUTPUT_HEADERS=${OUTPUT_DIR}/include/${ANDROID_ABI}
   mkdir -p ${OUTPUT_HEADERS}
@@ -46,7 +49,7 @@ function prepareOutput() {
 # Otherwise the whole script is interrupted
 function checkTextRelocations() {
   TEXT_REL_STATS_FILE=${STATS_DIR}/text-relocations.txt
-  ${FAM_READELF} --dynamic ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so | grep 'TEXTREL\|File' >> ${TEXT_REL_STATS_FILE}
+  ${FAM_READELF} --dynamic ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so | grep 'TEXTREL\|File' >> ${TEXT_REL_STATS_FILE} 2>/dev/null
 
   if grep -q TEXTREL ${TEXT_REL_STATS_FILE}; then
     echo "There are text relocations in output files:"
@@ -67,6 +70,7 @@ mkdir -p ${OUTPUT_DIR}
 # Exporting more necessary variabls
 source ${SCRIPTS_DIR}/export-host-variables.sh
 source ${SCRIPTS_DIR}/parse-arguments.sh
+source ${SCRIPTS_DIR}/ffmpeg-config-env.sh
 
 # Treating FFmpeg as just a module to build after its dependencies
 COMPONENTS_TO_BUILD=${EXTERNAL_LIBRARIES[@]}
