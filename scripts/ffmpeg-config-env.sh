@@ -1,8 +1,5 @@
 #! /usr/bin/env bash
 
-export ANDROID_SDK_HOME="/Users/rowland/Develop/Android/sdk"
-export ANDROID_NDK_HOME="/Users/rowland/Develop/Android/android-ndk-r21b"
-
 #--------------------
 # Standard options:
 export COMMON_FF_CFG_FLAGS=
@@ -45,11 +42,12 @@ export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=m4v"
 export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-demuxer=flv"
 export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-muxer=mp4"
 export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-muxer=flv"
-export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-network"
+export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-network"
 
 export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --disable-protocols"
 export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-protocol=rtmp"
 export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-protocol=file"
+export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-protocol=librtmp"
 
 # Configuration options:
 export COMMON_FF_CFG_FLAGS="$COMMON_FF_CFG_FLAGS --enable-static"

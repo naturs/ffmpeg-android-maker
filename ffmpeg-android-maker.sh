@@ -18,6 +18,8 @@ export SCRIPTS_DIR=${BASE_DIR}/scripts
 # All FFmpeg's libraries and headers are copied there
 export OUTPUT_DIR=${BASE_DIR}/output
 
+source ${SCRIPTS_DIR}/sdk-config.sh
+
 # Check the host machine for proper setup and fail fast otherwise
 ${SCRIPTS_DIR}/check-host-machine.sh || exit 1
 
